@@ -1,0 +1,24 @@
+{
+  "name": "espn-scraper",
+  "version": "1.0.0",
+  "description": "This project was made while learning webscraping using node-js for learning purpose. website : https://www.espncricinfo.com/series/ipl-2020-21-1210595",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jyotijauhari/espn-scraper.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jyotijauhari/espn-scraper/issues"
+  },
+  "homepage": "https://github.com/jyotijauhari/espn-scraper#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.10",
+    "request": "^2.88.2"
+  }
+}
