@@ -41,8 +41,7 @@ function extractAllMatchLink(html){
         let fullLink = "https://www.espncricinfo.com" + scorecardLink;
         // console.log(fullLink);
         gifs(fullLink);
-        // count ++;
-        break;
+        // break;
     }
     // console.log(count);
 }

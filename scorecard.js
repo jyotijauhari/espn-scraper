@@ -1,5 +1,9 @@
 const request = require("request");
 const cheerio = require("cheerio");
+const fs = require("fs");
+const path = require("path");
+//first install using -> npm i xlsx
+const xlsx = require("xlsx");
 
 function getInfoFromScorecard(url){
     console.log("hey from scorecard gifs function");
@@ -11,6 +15,7 @@ function cb(err, res, html){
         console.log(err);
     }
     else{
+        console.log("---------------------------------------------------------------------------------------");
         getMatchDetails(html);
     }
 }
@@ -88,6 +93,9 @@ function getMatchDetails(html){
                 console.log(
                     `${playerName} ->  ${runs} ->  ${balls} -> ${numberOf4} -> ${numberOf6} -> ${sr}`
                   );
+                
+                //storing details in excel file
+                processInformation(dateofMatch, venueofMatch, matchResult, ownTeam, opponentTeam, playerName, runs, balls, numberOf4, numberOf6, sr);
 
             }
              
@@ -95,6 +103,71 @@ function getMatchDetails(html){
       
       }
 
+}
+
+function processInformation(dateOfMatch, venueOfMatch, matchResult, ownTeam, opponentTeam, playerName, runs, balls, numberOf4, numberOf6, sr){
+    let mainIplFolder = path.join(__dirname, "IPL");
+
+    if(!fs.existsSync(mainIplFolder)){
+        fs.mkdirSync(mainIplFolder);
+    }
+
+    let teamNamePath = path.join(__dirname, "IPL", ownTeam );
+    // let teamNamePath = path.join(__dirname, "IPL", ownTeam + " vs " + opponentTeam); 
+    if (!fs.existsSync(teamNamePath)) {
+        fs.mkdirSync(teamNamePath);
+      }
+
+    let playerPath = path.join(teamNamePath, playerName + ".xlsx");
+    let content = excelReader(playerPath, playerName);
+
+    //es6 object syntax 
+    let playerObj = {
+        dateOfMatch,
+        venueOfMatch,
+        matchResult,
+        ownTeam,
+        opponentTeam,
+        playerName,
+        runs,
+        balls,
+        numberOf4,
+        numberOf6,
+        sr
+      };
+
+    content.push(playerObj);
+    //this function writes all the content into excel sheet , and places that excel sheet data into playerPath-> rohitSharma.xlsx
+    excelWriter(playerPath, content, playerName);
+  
+    }
+
+
+//this function reads the data from excel file
+function excelReader(playerPath, sheetName) {
+    if (!fs.existsSync(playerPath)) {
+      //if playerPath does not exists, this means that we have never placed any data into that file , so return empty object
+      return [];
+    }
+    //if playerPath already has some data in it 
+    let workBook = xlsx.readFile(playerPath);
+    //A dictionary of the worksheets in the workbook. Use SheetNames to reference these.
+    let excelData = workBook.Sheets[sheetName];
+    let playerObj = xlsx.utils.sheet_to_json(excelData);
+    return playerObj
+}
+
+//this function writes the data to excel file
+function excelWriter(playerPath, jsObject, sheetName) {
+    //Creates a new workbook
+    let newWorkBook = xlsx.utils.book_new();
+    //json data -> excel format convert
+    let newWorkSheet = xlsx.utils.json_to_sheet(jsObject);
+    //it appends a worksheet to a workbook, sheetname is name of worksheet tht we want
+    xlsx.utils.book_append_sheet(newWorkBook, newWorkSheet, sheetName);
+    // Attempts to write or download workbook data to file
+    //add workbook to filesystem (playerpath is filepath)
+    xlsx.writeFile(newWorkBook, playerPath);
 }
 
 

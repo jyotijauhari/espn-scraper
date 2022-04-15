@@ -5,3 +5,4 @@ This project was made while learning webscraping using node-js for learning purp
 - npm init -y
 - npm i request
 - npm i cheerio
+- npm i xlsx
