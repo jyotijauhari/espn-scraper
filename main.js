@@ -38,8 +38,8 @@ function handleHtml(html){
     let relativeLink = anchorOfAllResultsButton.attr("href");
     // console.log(relativeLink);
 
-    let AllresultsPageLink = url + relativeLink;
-    console.log(AllresultsPageLink);
+    let AllresultsPageLink = "https://www.espncricinfo.com" + relativeLink;
+    // console.log(AllresultsPageLink);
 
     getAllMatch(AllresultsPageLink);
 
