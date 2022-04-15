@@ -34,8 +34,13 @@ function getMatchDetails(html){
     // 2. get Date
     let dateofMatch = descArr[2];
 
-    console.log("venue: " + venueofMatch);
-    console.log("date of match: " + dateofMatch);
+    // console.log("venue: " + venueofMatch);
+    // console.log("date of match: " + dateofMatch);
+
+    // 3. get result
+    let matchResultEle = selecTool(".ds-text-tight-m.ds-font-regular.ds-truncate");
+    let matchResult = matchResultEle.text();
+    console.log("match result: " + matchResult);
 
 }
 
