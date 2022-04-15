@@ -40,7 +40,16 @@ function getMatchDetails(html){
     // 3. get result
     let matchResultEle = selecTool(".ds-text-tight-m.ds-font-regular.ds-truncate");
     let matchResult = matchResultEle.text();
-    console.log("match result: " + matchResult);
+    // console.log("match result: " + matchResult);
+
+    // 4. get teams names
+    let teamNamesArr = selecTool("a[class = 'ds-text-ui-typo hover:ds-text-ui-typo-primary ds-block']");
+
+    let ownTeam = selecTool(teamNamesArr[0]).text();
+    let opponentTeam = selecTool(teamNamesArr[1]).text();
+
+    console.log("team 1: " + ownTeam);
+    console.log("team 2: " + opponentTeam);
 
 }
 
